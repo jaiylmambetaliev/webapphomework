@@ -1,0 +1,30 @@
+services:
+  database:
+    image: postgres:15
+    container_name: classroom-1
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: classroom
+      POSTGRES_USER: classroom
+      POSTGRES_PASSWORD: classroom
+    networks:
+      - classroom-network
+
+  app:
+    build: .
+    container_name: hwapp
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/classroom
+      SPRING_DATASOURCE_USERNAME: classroom
+      SPRING_DATASOURCE_PASSWORD: classroom
+    networks:
+      - classroom-network
+
+networks:
+  classroom-network:
+    driver: bridge
