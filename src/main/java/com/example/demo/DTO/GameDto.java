@@ -1,23 +1,21 @@
 package com.example.demo.DTO;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Random;
+@Entity
+@Table(name = "games")
 @Data
-
 public class GameDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private int number;
     private int guesses;
-    public static int gameCount;
-
-
 
     public GameDto() {
-        id = 1 + gameCount++;
-        number = (int) (Math.random() * 100) + 1;
-        guesses = 0;
-
+        this.number = (int) (Math.random() * 100) + 1;
+        this.guesses = 0;
     }
 }
-
